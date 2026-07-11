@@ -72,9 +72,14 @@ async function bootstrap() {
     });
   }
 
-  await app.listen(port);
-  Logger.log(`🚀 Application running on: http://localhost:${port}/api`, 'Bootstrap');
-  Logger.log(`📚 Swagger docs: http://localhost:${port}/api/docs`, 'Bootstrap');
+  try {
+    await app.listen(port, '0.0.0.0');
+    Logger.log(`🚀 Application running on: http://0.0.0.0:${port}/api`, 'Bootstrap');
+    Logger.log(`📚 Swagger docs: http://0.0.0.0:${port}/api/docs`, 'Bootstrap');
+  } catch (error) {
+    Logger.error('Error starting application', error);
+    process.exit(1);
+  }
 }
 
 bootstrap();
