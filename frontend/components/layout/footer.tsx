@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { CreditCard, Twitter, Github, Shield } from 'lucide-react';
+import { CreditCard, Shield } from 'lucide-react';
 
 export function Footer() {
   return (
