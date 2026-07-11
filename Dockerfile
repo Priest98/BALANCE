@@ -15,7 +15,7 @@ COPY backend/ .
 RUN npx prisma generate
 
 # Build NestJS
-RUN npm run build
+RUN npm run build && ls -la && ls -la dist/
 
 EXPOSE 3001
 CMD ["npm", "run", "start:prod"]
