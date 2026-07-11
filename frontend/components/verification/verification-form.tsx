@@ -40,7 +40,7 @@ export function VerificationForm() {
     watch,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema as any),
     defaultValues: { currency: 'USD', amount: 50 },
   });
 
