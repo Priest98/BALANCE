@@ -41,7 +41,7 @@ export function VerificationForm() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema as any),
-    defaultValues: { currency: 'USD', amount: 50 },
+    defaultValues: { currency: 'USD' },
   });
 
   const selectedTypeId = watch('cardTypeId');
@@ -142,7 +142,7 @@ export function VerificationForm() {
                 min="0.01"
                 max="10000"
                 {...register('amount')}
-                placeholder="50.00"
+                placeholder="0.00"
                 className="w-full bg-white text-gray-900 border border-gray-300 rounded-lg px-4 py-3 pl-12 
                            text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               />
