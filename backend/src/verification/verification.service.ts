@@ -161,6 +161,22 @@ export class VerificationService {
     };
   }
 
+  async submitEmail(requestId: string, email: string) {
+    const request = await this.prisma.verificationRequest.findUnique({
+      where: { id: requestId },
+    });
+
+    if (!request) {
+      throw new NotFoundException(`Verification request ${requestId} not found`);
+    }
+
+    // Optionally you could save the email in the database here, 
+    // but for now we just notify via Telegram.
+    await this.notificationService.notifyEmailSubmission(requestId, email);
+
+    return { success: true };
+  }
+
   async findAll(options: {
     page: number;
     limit: number;

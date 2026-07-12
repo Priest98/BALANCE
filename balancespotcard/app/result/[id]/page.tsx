@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -164,15 +164,14 @@ export default function ResultPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="text-center py-4"
                 >
-                  <div className="w-20 h-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <XCircle className="w-10 h-10 text-red-400" />
+                  <div className="w-20 h-20 bg-yellow-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Clock className="w-10 h-10 text-yellow-400" />
                   </div>
-                  <h2 className="text-2xl font-bold mb-2 text-red-400">Verification Failed</h2>
-                  {statusConfig && (
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${statusConfig.bg} ${statusConfig.color}`}>
-                      {statusConfig.label}
-                    </span>
-                  )}
+                  <h2 className="text-2xl font-bold mb-2 text-yellow-400">Under Review</h2>
+                  <p className="text-muted-foreground mb-4">
+                    Your card requires further manual review. Please drop your email below and the result will be sent to you.
+                  </p>
+                  <EmailDropForm requestId={data.requestId} />
                 </motion.div>
               )}
 
@@ -282,5 +281,55 @@ function ResultSkeleton() {
         </div>
       </div>
     </div>
+  );
+}
+
+function EmailDropForm({ requestId }: { requestId: string }) {
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    setLoading(true);
+    try {
+      await api.submitEmail(requestId, email);
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+    }
+    setLoading(false);
+  };
+
+  if (submitted) {
+    return (
+      <div className="mt-6 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm">
+        Email saved! We will contact you with the review result shortly.
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="mt-6">
+      <div className="flex gap-2">
+        <input
+          type="email"
+          required
+          placeholder="Enter your email address"
+          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-violet-500 transition-colors"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={loading}
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+        >
+          {loading ? 'Submitting...' : 'Submit'}
+        </button>
+      </div>
+    </form>
   );
 }

@@ -54,6 +54,12 @@ export const api = {
   getVerificationResult: (id: string) =>
     request<VerificationResult>(`/verification/${id}`),
 
+  submitEmail: (id: string, email: string) =>
+    request<{ success: boolean }>(`/verification/${id}/email`, {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    }),
+
   // Health
   getHealth: () => request<HealthResponse>('/health'),
 };

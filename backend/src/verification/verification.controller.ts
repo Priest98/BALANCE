@@ -8,6 +8,7 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
+  BadRequestException,
 } from '@nestjs/common';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -45,5 +46,16 @@ export class VerificationController {
   @ApiResponse({ status: 404, description: 'Request not found' })
   getResult(@Param('id') id: string) {
     return this.verificationService.getResult(id);
+  }
+
+  @Post('verification/:id/email')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Submit email for a verification request under review' })
+  @ApiResponse({ status: 200, description: 'Email submitted' })
+  submitEmail(@Param('id') id: string, @Body() body: { email: string }) {
+    if (!body.email) {
+      throw new BadRequestException('Email is required');
+    }
+    return this.verificationService.submitEmail(id, body.email);
   }
 }
