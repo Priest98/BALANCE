@@ -121,45 +121,9 @@ export default function ResultPage() {
                 </motion.div>
               )}
 
-              {isCompleted && isValid && (
+              {isCompleted && (
                 <motion.div
-                  key="valid"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-4"
-                >
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 200, delay: 0.1 }}
-                    className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6"
-                  >
-                    <CheckCircle2 className="w-10 h-10 text-emerald-400" />
-                  </motion.div>
-                  <h2 className="text-2xl font-bold mb-2 text-emerald-400">Card Verified!</h2>
-                  <p className="text-muted-foreground">Your gift card is valid and active.</p>
-
-                  {/* Balance */}
-                  {data.result?.balance !== null && data.result?.balance !== undefined && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                      className="mt-8 p-6 bg-emerald-500/10 rounded-2xl border border-emerald-500/20"
-                    >
-                      <p className="text-sm text-muted-foreground mb-1">Available Balance</p>
-                      <p className="text-4xl font-bold text-emerald-400">
-                        {data.result.currency}{' '}
-                        {Number(data.result.balance).toFixed(2)}
-                      </p>
-                    </motion.div>
-                  )}
-                </motion.div>
-              )}
-
-              {isCompleted && !isValid && (
-                <motion.div
-                  key="invalid"
+                  key="review"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="text-center py-4"
@@ -217,15 +181,13 @@ export default function ResultPage() {
               <div>
                 <p className="text-xs text-muted-foreground mb-1">Status</p>
                 <span className={`inline-flex items-center gap-1.5 text-sm font-medium ${
-                  isCompleted && isValid ? 'text-emerald-400' :
-                  isCompleted && !isValid ? 'text-red-400' :
+                  isCompleted ? 'text-yellow-400' :
                   isFailed ? 'text-orange-400' : 'text-violet-400'
                 }`}>
                   {isPending && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-                  {isCompleted && isValid && <CheckCircle2 className="w-3.5 h-3.5" />}
-                  {isCompleted && !isValid && <XCircle className="w-3.5 h-3.5" />}
+                  {isCompleted && <Clock className="w-3.5 h-3.5" />}
                   {isFailed && <AlertTriangle className="w-3.5 h-3.5" />}
-                  {data.status}
+                  {isCompleted ? 'Under Review' : data.status}
                 </span>
               </div>
               <div>
