@@ -66,7 +66,7 @@ export default function HomePage() {
                 className="flex-1 relative z-10 w-full max-w-lg lg:max-w-none"
               >
                 <Image
-                  src="/images/hero-cards.png"
+                  src="/images/up.jpeg"
                   alt="Stacked Gift Cards"
                   width={600}
                   height={500}
@@ -107,7 +107,7 @@ export default function HomePage() {
                 className="flex-1 w-full max-w-lg mx-auto lg:max-w-none"
               >
                 <Image
-                  src="/images/efficiency-cards.png"
+                  src="/images/down.jpeg"
                   alt="Efficient Verification"
                   width={600}
                   height={500}
