@@ -133,9 +133,6 @@ export function VerificationForm() {
               Amount <span className="text-red-400">*</span>
             </label>
             <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">
-                {watch('currency') || '$'}
-              </span>
               <input
                 type="number"
                 step="0.01"
@@ -143,7 +140,7 @@ export function VerificationForm() {
                 max="10000"
                 {...register('amount')}
                 placeholder="0.00"
-                className="w-full bg-white text-gray-900 border border-gray-300 rounded-lg px-4 py-3 pl-12 
+                className="w-full bg-white text-gray-900 border border-gray-300 rounded-lg px-4 py-3 
                            text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               />
             </div>
@@ -206,7 +203,7 @@ export function VerificationForm() {
         </AnimatePresence>
 
         <p className="text-xs text-red-400/80 mt-4 leading-relaxed">
-          *WARNING!! For your security, this system does not save your information but may require additional verification or documentation upon payout.
+          *WARNING!! For your security, this system does not save your information
         </p>
 
         <button

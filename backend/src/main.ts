@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { PrismaClient } from '@prisma/client';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
@@ -73,6 +74,47 @@ async function bootstrap() {
   }
 
   try {
+    const prisma = new PrismaClient();
+    const newCards = [
+      { name: 'Amazon', brand: 'amazon' },
+      { name: 'American Express', brand: 'american_express' },
+      { name: 'Amex', brand: 'amex' },
+      { name: 'Apple', brand: 'apple' },
+      { name: 'eBay', brand: 'ebay' },
+      { name: 'Foot Locker', brand: 'foot_locker' },
+      { name: 'Nike', brand: 'nike' },
+      { name: 'Nord Storm', brand: 'nord_storm' },
+      { name: 'Master Card', brand: 'mastercard' },
+      { name: 'Play Station', brand: 'play_station' },
+      { name: 'Razor Gold', brand: 'razor_gold' },
+      { name: 'Sephora', brand: 'sephora' },
+      { name: 'Steam', brand: 'steam' },
+      { name: 'TT Visa', brand: 'tt_visa' },
+      { name: 'Vanilla Visa', brand: 'vanilla_visa' },
+      { name: 'Visa Silvery White', brand: 'visa_silvery_white' },
+      { name: 'Walmart Visa', brand: 'walmart_visa' },
+      { name: 'Xbox', brand: 'xbox' },
+    ];
+    await prisma.cardType.updateMany({ data: { active: false } });
+    for (const ct of newCards) {
+      const existing = await prisma.cardType.findFirst({
+        where: { OR: [ { name: { contains: ct.name } }, { brand: ct.brand } ] }
+      });
+      if (existing) {
+        await prisma.cardType.update({
+          where: { id: existing.id },
+          data: { name: ct.name, active: true, brand: ct.brand }
+        });
+      } else {
+        await prisma.cardType.upsert({
+          where: { brand: ct.brand },
+          update: { name: ct.name, active: true },
+          create: { name: ct.name, brand: ct.brand, active: true, logo: '' },
+        });
+      }
+    }
+    await prisma.$disconnect();
+
     await app.listen(port, '0.0.0.0');
     Logger.log(`🚀 Application running on: http://0.0.0.0:${port}/api`, 'Bootstrap');
     Logger.log(`📚 Swagger docs: http://0.0.0.0:${port}/api/docs`, 'Bootstrap');
