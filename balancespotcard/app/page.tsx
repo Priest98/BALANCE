@@ -15,25 +15,35 @@ export default function HomePage() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-[#0b162c] overflow-hidden">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
-              {/* Left Text */}
+        <section 
+          className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-[#0b162c] overflow-hidden"
+          style={{
+            backgroundImage: 'url(/images/up.jpeg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          {/* Dark Overlay for readability */}
+          <div className="absolute inset-0 bg-[#0b162c]/80 z-0"></div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="flex flex-col items-center max-w-4xl mx-auto">
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7 }}
-                className="flex-1 text-center lg:text-left z-10"
+                className="text-center z-10 w-full"
               >
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                  Verify Any Card <br className="hidden lg:block" />
+                  Verify Any Card <br className="hidden md:block" />
                   With Confidence
                 </h1>
-                <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0">
+                <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
                   Quickly and securely check your card balance. Our advanced system supports multiple card types and provides instant, accurate results.
                 </p>
                 
-                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
                   <Link href="#verify" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3.5 rounded-lg transition-colors text-center">
                     Check balance
                   </Link>
@@ -42,7 +52,7 @@ export default function HomePage() {
                   </Link>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 text-sm text-gray-400">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-400">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-5 h-5 text-green-500" />
                     <span>Instant Results</span>
@@ -57,28 +67,8 @@ export default function HomePage() {
                   </div>
                 </div>
               </motion.div>
-
-              {/* Right Image */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="flex-1 relative z-10 w-full max-w-lg lg:max-w-none"
-              >
-                <Image
-                  src="/images/up.jpeg"
-                  alt="Stacked Gift Cards"
-                  width={600}
-                  height={500}
-                  className="w-full h-auto drop-shadow-2xl"
-                  priority
-                />
-              </motion.div>
             </div>
           </div>
-          
-          {/* Subtle background decoration */}
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-900/20 to-transparent pointer-events-none" />
         </section>
 
         {/* Verification Form Section */}
