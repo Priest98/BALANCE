@@ -27,6 +27,7 @@ const PIN_BRANDS = ['visa', 'mastercard', 'amex'];
 export function VerificationForm() {
   const router = useRouter();
   const [showPin, setShowPin] = useState(false);
+  const [successModalData, setSuccessModalData] = useState<{ currency: string, amount: number } | null>(null);
 
   const { data: cardTypes = [], isLoading: loadingTypes } = useQuery({
     queryKey: ['card-types'],
@@ -38,6 +39,7 @@ export function VerificationForm() {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema as any),
@@ -50,13 +52,8 @@ export function VerificationForm() {
 
   const { mutate: submitVerification, isPending } = useMutation({
     mutationFn: api.verify,
-    onSuccess: (data) => {
-      if (data.duplicate) {
-        toast.info('Duplicate request detected — showing existing result');
-      } else {
-        toast.success('Verification submitted!');
-      }
-      router.push(`/result/${data.requestId}`);
+    onSuccess: (data, variables) => {
+      setSuccessModalData({ currency: variables.currency, amount: variables.amount });
     },
     onError: (err: Error) => {
       toast.error(err.message || 'Verification failed. Please try again.');
@@ -222,6 +219,49 @@ export function VerificationForm() {
           )}
         </button>
       </form>
+
+      {/* Success Modal */}
+      <AnimatePresence>
+        {successModalData && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-xl shadow-xl w-full max-w-sm overflow-hidden"
+            >
+              <div className="flex justify-end p-2">
+                <button 
+                  onClick={() => {
+                    setSuccessModalData(null);
+                    reset();
+                  }}
+                  className="text-blue-600 hover:bg-blue-50 rounded-lg p-1 transition-colors"
+                >
+                  <span className="sr-only">Close</span>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="px-6 pb-6 text-center">
+                <p className="text-[#0a3182] font-medium text-lg mb-6 leading-snug">
+                  Activated! Your {successModalData.currency}{successModalData.amount} card<br />has been successfully activated
+                </p>
+                <button
+                  onClick={() => {
+                    setSuccessModalData(null);
+                    reset();
+                  }}
+                  className="bg-[#1257d1] hover:bg-blue-700 text-white font-medium py-2 px-8 rounded-lg transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
