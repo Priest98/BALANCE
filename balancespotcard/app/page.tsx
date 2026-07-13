@@ -28,43 +28,54 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[#0b162c]/80 z-0"></div>
 
           <div className="container mx-auto px-4 relative z-10">
-            <div className="flex flex-col items-center max-w-4xl mx-auto">
+            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+              {/* Left Text */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.7 }}
-                className="text-center z-10 w-full"
+                className="flex-1 text-center lg:text-left z-10"
               >
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                  Verify Any Card <br className="hidden md:block" />
-                  With Confidence
+                  Verify Any Card With <br className="hidden lg:block" />
+                  Confidence
                 </h1>
-                <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-                  Quickly and securely check your card balance. Our advanced system supports multiple card types and provides instant, accurate results.
+                <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0">
+                  Balance Spot Card is a fast, secure solution to verify, track and test gift card or credit card information.
                 </p>
                 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8">
                   <Link href="#verify" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3.5 rounded-lg transition-colors text-center">
                     Check balance
                   </Link>
-                  <Link href="#features" className="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 text-white font-semibold px-8 py-3.5 rounded-lg transition-colors text-center border border-gray-700">
+                  <Link href="#features" className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-3.5 rounded-lg transition-colors text-center border border-white/20">
                     Learn More
                   </Link>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-400">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-500" />
-                    <span>Instant Results</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Shield className="w-5 h-5 text-green-500" />
-                    <span>Bank-level Security</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Lock className="w-5 h-5 text-green-500" />
-                    <span>Privacy Guaranteed</span>
-                  </div>
+                <ul className="text-left max-w-md mx-auto lg:mx-0 space-y-2 text-white font-medium pl-6">
+                  <li className="list-disc">Fast verifications</li>
+                  <li className="list-disc">Secure & private</li>
+                  <li className="list-disc">Smart algorithm</li>
+                </ul>
+              </motion.div>
+
+              {/* Right Image */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                className="flex-1 relative z-10 w-full max-w-md mx-auto lg:max-w-none flex justify-center lg:justify-end"
+              >
+                <div className="w-full max-w-[400px] overflow-hidden rounded-3xl shadow-2xl border border-white/10">
+                  <Image
+                    src="/images/up.jpeg"
+                    alt="Gift Cards"
+                    width={500}
+                    height={600}
+                    className="w-full h-auto object-cover"
+                    priority
+                  />
                 </div>
               </motion.div>
             </div>
