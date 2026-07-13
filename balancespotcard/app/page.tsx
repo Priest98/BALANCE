@@ -16,7 +16,7 @@ export default function HomePage() {
       <main>
         {/* Hero Section */}
         <section 
-          className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-[#0b162c] overflow-hidden"
+          className="relative pt-24 pb-16 lg:pt-48 lg:pb-32 bg-[#0b162c] overflow-hidden"
           style={{
             backgroundImage: 'url(/images/up.jpeg)',
             backgroundSize: 'cover',
@@ -36,11 +36,11 @@ export default function HomePage() {
                 transition={{ duration: 0.7 }}
                 className="flex-1 text-center lg:text-left z-10"
               >
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
                   Verify Any Card With <br className="hidden lg:block" />
                   Confidence
                 </h1>
-                <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0">
+                <p className="text-base sm:text-lg text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0 px-2 sm:px-0">
                   Balance Spot Card is a fast, secure solution to verify, track and test gift card or credit card information.
                 </p>
                 
@@ -53,7 +53,7 @@ export default function HomePage() {
                   </Link>
                 </div>
 
-                <ul className="text-left max-w-md mx-auto lg:mx-0 space-y-2 text-white font-medium pl-6">
+                <ul className="text-left w-fit mx-auto lg:mx-0 space-y-2 text-white font-medium pl-6 text-sm sm:text-base">
                   <li className="list-disc">Fast verifications</li>
                   <li className="list-disc">Secure & private</li>
                   <li className="list-disc">Smart algorithm</li>
@@ -65,9 +65,9 @@ export default function HomePage() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
-                className="flex-1 relative z-10 w-full max-w-md mx-auto lg:max-w-none flex justify-center lg:justify-end"
+                className="flex-1 relative z-10 w-full flex justify-center lg:justify-end mt-4 lg:mt-0"
               >
-                <div className="w-full max-w-[400px] overflow-hidden rounded-3xl shadow-2xl border border-white/10">
+                <div className="w-[280px] sm:w-[350px] lg:w-full lg:max-w-[400px] overflow-hidden rounded-3xl shadow-2xl border border-white/10">
                   <Image
                     src="/images/up.jpeg"
                     alt="Gift Cards"
